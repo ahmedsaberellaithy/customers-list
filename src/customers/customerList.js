@@ -18,12 +18,27 @@ const statuses = [
 
 export default class CustomerList extends React.Component {
   state = {
+    country:'all',
+    validity:'all',
     customers: []
   }
 
-  change = (e) => {
-    console.log(e);
-    console.log(e.target.value);
+  changeCountry = (e) => {
+    const country = e.target.value;
+    this.setState({ country });
+    customerApi({country,valid:this.state.validity}).then(res => {
+      const customers = res.data;
+      this.setState({ customers });
+    });
+  }
+
+  changeValidity = (e) => {
+    const validity = e.target.value;
+    this.setState({ validity });
+    customerApi({valid:validity,country:this.state.country}).then(res => {
+      const customers = res.data;
+      this.setState({ customers });
+    })
   }
 
   componentDidMount() {
@@ -38,7 +53,7 @@ export default class CustomerList extends React.Component {
       <Container>
           <Row className="filters">
             <Col>
-                <select key="country" onChange={this.change}>
+                <select key="country" onChange={this.changeCountry}>
                     <option value="all">All Customers</option>
                     {
                         countries.map(country=>{
@@ -50,7 +65,7 @@ export default class CustomerList extends React.Component {
                 </select>
             </Col>
             <Col>
-                <select key="status" onChange={this.change}>
+                <select key="status" onChange={this.changeValidity}>
                     <option value="all">All Customers</option>
                     {
                         statuses.map(status=>{
@@ -62,28 +77,33 @@ export default class CustomerList extends React.Component {
                 </select>
             </Col>
         </Row>
-        <Table responsive striped bordered hover size="sm">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Customer Name</th>
-              <th>Phone</th>
-            </tr>
-          </thead>
-          <tbody>
-          {
-            this.state.customers.map(customer=>{
-              return (
-                <tr>
-                  <td>{customer.id}</td>
-                  <td>{customer.name}</td>
-                  <td>{customer.phone}</td>
-                </tr>
-              )
-            })
-          }
-          </tbody>
-        </Table>
+        <Row>
+
+        </Row>
+        <Row>
+          <Table responsive striped bordered hover size="sm">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Customer Name</th>
+                <th>Phone</th>
+              </tr>
+            </thead>
+            <tbody>
+            {
+              this.state.customers.map(customer=>{
+                return (
+                  <tr>
+                    <td>{customer.id}</td>
+                    <td>{customer.name}</td>
+                    <td>{customer.phone}</td>
+                  </tr>
+                )
+              })
+            }
+            </tbody>
+          </Table>
+        </Row>
       </Container>
     )
   }
