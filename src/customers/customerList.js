@@ -93,7 +93,7 @@ export default class CustomerList extends React.Component {
             {
               this.state.customers.map(customer=>{
                 return (
-                  <tr>
+                  <tr key={customer.id}>
                     <td>{customer.id}</td>
                     <td>{customer.name}</td>
                     <td>{customer.phone}</td>

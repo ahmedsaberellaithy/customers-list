@@ -1,6 +1,6 @@
 import axios from 'axios';
-const baseUrl = "http://localhost:8082";
-// const baseUrl = process.env.REACT_APP_BASE_URL;
+// const baseUrl = "http://localhost:8082";
+const baseUrl = process.env.REACT_APP_BASE_URL;
 
 //country:"uganda",valid:"valid"
 const getCustomers = ({country,valid}) => {
