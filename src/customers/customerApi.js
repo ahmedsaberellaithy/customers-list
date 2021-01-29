@@ -4,7 +4,7 @@ const baseUrl = "http://localhost:8082";
 
 //country:"uganda",valid:"valid"
 const getCustomers = ({country,valid}) => {
-    console.log({country,valid});
+
     let subUrl = '/customers';
     if(country && country !== 'all'){
         subUrl = `${subUrl}?country=${country}`
